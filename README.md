@@ -62,5 +62,7 @@ src/
 
 ## デプロイ
 
-Vercel に接続すると、push のたびに自動デプロイされます。
-本番ドメイン: `ai-search-match.org`
+GitHub と Vercel が連携済みです。`main` ブランチに push すると自動で本番デプロイされます。
+
+- 本番URL: https://epanouie.vercel.app
+- 独自ドメイン（予定）: `ai-search-match.org`
