@@ -75,7 +75,7 @@ export function AboutPage() {
           Épanouieは、その道のりにそっと寄り添いつづけます。
         </p>
         <Link
-          href="/articles"
+          href="/epanouie/articles"
           className="mt-8 inline-block rounded-full bg-lavender-500 px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-lavender-600"
         >
           読みものを見る

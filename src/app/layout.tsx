@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Sans_JP, Noto_Serif_JP } from "next/font/google";
-import { SiteHeader } from "@/components/features/site-header";
-import { SiteFooter } from "@/components/features/site-footer";
+import { lumi } from "@/lib/media/lumi";
 import "./globals.css";
 
 const notoSans = Noto_Sans_JP({
@@ -19,26 +18,24 @@ const notoSerif = Noto_Serif_JP({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ai-search-match.org"),
+  metadataBase: new URL(lumi.baseUrl),
   title: {
-    default: "Épanouie — 35歳から、本当の自分が咲く。",
-    template: "%s | Épanouie",
+    default: `${lumi.name} — ${lumi.tagline}`,
+    template: `%s | ${lumi.name}`,
   },
-  description:
-    "35歳からの独身女性のための自己肯定感メディア。孤独や自信のゆらぎに、そっと寄り添う言葉と物語を。そのままのあなたで、いい。",
-  keywords: ["自己肯定感", "35歳", "独身女性", "生き方", "Épanouie"],
+  description: lumi.description,
+  keywords: ["AI", "幸せ", "ウェルビーイング", "メディア", lumi.name],
   openGraph: {
-    title: "Épanouie — 35歳から、本当の自分が咲く。",
-    description:
-      "35歳からの独身女性のための自己肯定感メディア。そのままのあなたで、いい。",
+    title: `${lumi.name} — ${lumi.tagline}`,
+    description: lumi.description,
     type: "website",
     locale: "ja_JP",
-    siteName: "Épanouie",
+    siteName: lumi.name,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Épanouie — 35歳から、本当の自分が咲く。",
-    description: "35歳からの独身女性のための自己肯定感メディア。",
+    title: `${lumi.name} — ${lumi.tagline}`,
+    description: lumi.description,
   },
 };
 
@@ -53,9 +50,7 @@ export function RootLayout({
       className={`${notoSans.variable} ${notoSerif.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-cream text-ink">
-        <SiteHeader />
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
+        {children}
       </body>
     </html>
   );

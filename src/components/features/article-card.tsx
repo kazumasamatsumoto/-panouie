@@ -4,12 +4,14 @@ import type { ArticleMeta } from "@/types/article";
 
 interface ArticleCardProps {
   article: ArticleMeta;
+  /** 記事が属するメディアのスラッグ（リンク生成に使用） */
+  media: string;
 }
 
-export function ArticleCard({ article }: ArticleCardProps) {
+export function ArticleCard({ article, media }: ArticleCardProps) {
   return (
     <Link
-      href={`/articles/${article.slug}`}
+      href={`/${media}/articles/${article.slug}`}
       className="group flex flex-col overflow-hidden rounded-2xl border border-plum-100 bg-white/70 transition-all hover:-translate-y-1 hover:border-lavender-300 hover:shadow-lg hover:shadow-lavender-300/20"
     >
       <div className="flex h-40 items-center justify-center bg-gradient-to-br from-plum-100 to-champagne-300/60 text-5xl">

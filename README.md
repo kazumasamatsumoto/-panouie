@@ -1,16 +1,18 @@
-# Épanouie
+# Lumi
 
-> 35歳から、本当の自分が咲く。
+> AIで、あなたの光を。
 
-35歳以上の独身女性向けの自己肯定感メディア。
-孤独・自信喪失のペインに寄り添う、コンテンツメディアです。
+AIとともに「幸せ」を届けるメディアプラットフォーム。
+テーマ別のメディアを `ai-search-match.org` 配下に展開します。
+
+最初のメディアは **Épanouie**（`/epanouie`）— 35歳以上の独身女性向けの自己肯定感メディア。
 
 ## 技術スタック
 
 - **Framework**: Next.js 16 (App Router)
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS v4
-- **Content**: Markdown（`content/articles/`）+ remark
+- **Content**: Markdown（`content/<メディア>/`）+ remark
 - **Deploy**: Vercel
 
 ## 開発
@@ -26,8 +28,8 @@ npm run start        # 本番サーバー
 
 ## 記事の追加方法
 
-`content/articles/` に Markdown ファイルを追加するだけで、記事ページが自動生成されます。
-ファイル名（拡張子なし）がそのまま URL のスラッグになります。
+`content/<メディア>/`（例: `content/epanouie/`）に Markdown ファイルを追加するだけで、記事ページが自動生成されます。
+ファイル名（拡張子なし）がそのまま URL のスラッグになります（例: `/epanouie/articles/<スラッグ>`）。
 
 ```markdown
 ---
@@ -47,16 +49,23 @@ coverEmoji: "🌷"
 ## プロジェクト構成
 
 ```
-content/articles/        記事のMarkdownファイル
+content/
+  epanouie/              Épanouieの記事Markdown（メディアごとに分ける）
 src/
-  app/                   ページ（App Router）
-    page.tsx             トップページ
-    articles/            記事一覧・記事詳細
-    about/               Épanouieについて
-    sitemap.ts           サイトマップ自動生成
+  app/
+    page.tsx             Lumi ポータル（トップ）
+    layout.tsx           ルートレイアウト（フォント・全体メタ）
+    epanouie/            Épanouie メディア
+      layout.tsx         Épanouie用ヘッダー/フッター
+      page.tsx           Épanouieトップ
+      articles/          記事一覧・記事詳細
+      about/             Épanouieについて
+    sitemap.ts           全メディアのサイトマップ自動生成
     robots.ts            robots.txt
-  components/features/    Header / Footer / 記事カード
-  lib/content/           Markdown読み込みロジック
+  components/features/    Lumi/Épanouie のHeader・Footer・各カード
+  lib/
+    media/               メディア定義（registry）と Lumi 設定
+    content/             Markdown読み込みロジック（media slug 対応）
   types/                 型定義
 ```
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { lumi } from "@/lib/media/lumi";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -17,25 +18,34 @@ export function SiteFooter() {
             </p>
           </div>
           <nav className="flex flex-col gap-3 text-sm text-plum-200">
-            <Link href="/" className="transition-colors hover:text-lavender-300">
-              ホーム
+            <Link
+              href="/epanouie"
+              className="transition-colors hover:text-lavender-300"
+            >
+              Épanouieホーム
             </Link>
             <Link
-              href="/articles"
+              href="/epanouie/articles"
               className="transition-colors hover:text-lavender-300"
             >
               読みもの
             </Link>
             <Link
-              href="/about"
+              href="/epanouie/about"
               className="transition-colors hover:text-lavender-300"
             >
               Épanouieについて
             </Link>
+            <Link
+              href="/"
+              className="mt-2 text-plum-200/70 transition-colors hover:text-lavender-300"
+            >
+              ← {lumi.name} ポータルへ
+            </Link>
           </nav>
         </div>
         <p className="mt-12 text-xs text-plum-200/70">
-          © {year} Épanouie. すべての「そのまま」に、寄り添って。
+          © {year} {lumi.name} — Épanouie. すべての「そのまま」に、寄り添って。
         </p>
       </div>
     </footer>

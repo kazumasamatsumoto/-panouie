@@ -8,8 +8,10 @@ export const metadata: Metadata = {
     "35歳からの毎日に寄り添う、自己肯定感のための読みもの。心が少し軽くなる言葉を集めました。",
 };
 
+const MEDIA = "epanouie";
+
 export function ArticlesPage() {
-  const articles = getAllArticles();
+  const articles = getAllArticles(MEDIA);
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-20">
@@ -26,7 +28,7 @@ export function ArticlesPage() {
       {articles.length > 0 ? (
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {articles.map((article) => (
-            <ArticleCard key={article.slug} article={article} />
+            <ArticleCard key={article.slug} article={article} media={MEDIA} />
           ))}
         </div>
       ) : (

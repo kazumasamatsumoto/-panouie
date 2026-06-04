@@ -11,32 +11,37 @@ import type {
   ArticleMeta,
 } from "@/types/article";
 
-const ARTICLES_DIR = path.join(process.cwd(), "content", "articles");
+const CONTENT_DIR = path.join(process.cwd(), "content");
 
-function readArticleFile(slug: string): {
-  data: ArticleFrontmatter;
-  content: string;
-} {
-  const fullPath = path.join(ARTICLES_DIR, `${slug}.md`);
+function mediaDir(media: string): string {
+  return path.join(CONTENT_DIR, media);
+}
+
+function readArticleFile(
+  media: string,
+  slug: string,
+): { data: ArticleFrontmatter; content: string } {
+  const fullPath = path.join(mediaDir(media), `${slug}.md`);
   const raw = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(raw);
   return { data: data as ArticleFrontmatter, content };
 }
 
-export function getArticleSlugs(): string[] {
-  if (!fs.existsSync(ARTICLES_DIR)) {
+export function getArticleSlugs(media: string): string[] {
+  const dir = mediaDir(media);
+  if (!fs.existsSync(dir)) {
     return [];
   }
   return fs
-    .readdirSync(ARTICLES_DIR)
+    .readdirSync(dir)
     .filter((file) => file.endsWith(".md"))
     .map((file) => file.replace(/\.md$/, ""));
 }
 
-export function getAllArticles(): ArticleMeta[] {
-  return getArticleSlugs()
+export function getAllArticles(media: string): ArticleMeta[] {
+  return getArticleSlugs(media)
     .map((slug) => {
-      const { data, content } = readArticleFile(slug);
+      const { data, content } = readArticleFile(media, slug);
       return {
         ...data,
         slug,
@@ -46,8 +51,11 @@ export function getAllArticles(): ArticleMeta[] {
     .sort((a, b) => (a.publishedAt < b.publishedAt ? 1 : -1));
 }
 
-export async function getArticle(slug: string): Promise<Article> {
-  const { data, content } = readArticleFile(slug);
+export async function getArticle(
+  media: string,
+  slug: string,
+): Promise<Article> {
+  const { data, content } = readArticleFile(media, slug);
   const processed = await remark()
     .use(remarkGfm)
     .use(remarkHtml, { sanitize: false })

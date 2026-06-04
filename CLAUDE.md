@@ -1,12 +1,21 @@
 # Épanouie — CLAUDE.md
 
 ## Project Overview
-35歳以上の独身女性向け自己肯定感メディア。
+**Lumi** — 「AIで、あなたの光を。」をコンセプトに、AIとともに幸せを届けるメディアプラットフォーム。
+複数のテーマ別メディアを `ai-search-match.org` 配下に展開する。
+
+最初のメディアが **Épanouie**（35歳以上の独身女性向け自己肯定感メディア）。
 動画・テキストコンテンツで孤独・自信喪失のペインを解決する。
 ECサイトではなく、コンテンツ＋将来的な有料コミュニティ・プログラムが収益軸。
 
+### マルチメディア構成
+- `/`（ルート）= Lumi ポータル（全メディアの入口）
+- `/<media>`（例: `/epanouie`）= 各メディア。将来サブドメインへ移行可能な作り。
+- メディアの追加は `src/lib/media/registry.ts` に追記し、`content/<media>/` に記事を置く。
+- 記事ローダー `src/lib/content/articles.ts` は media slug を引数に取る。
+
 ## Tech Stack
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 16 (App Router)
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS
 - **Database**: Supabase (PostgreSQL)

@@ -4,12 +4,14 @@ import { notFound } from "next/navigation";
 import { formatDate } from "@/lib/format-date";
 import { getArticle, getArticleSlugs } from "@/lib/content/articles";
 
+const MEDIA = "epanouie";
+
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
 }
 
 export function generateStaticParams() {
-  return getArticleSlugs().map((slug) => ({ slug }));
+  return getArticleSlugs(MEDIA).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -17,7 +19,7 @@ export async function generateMetadata({
 }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
   try {
-    const article = await getArticle(slug);
+    const article = await getArticle(MEDIA, slug);
     return {
       title: article.title,
       description: article.description,
@@ -38,7 +40,7 @@ export async function ArticlePage({ params }: ArticlePageProps) {
 
   let article;
   try {
-    article = await getArticle(slug);
+    article = await getArticle(MEDIA, slug);
   } catch {
     notFound();
   }
@@ -46,7 +48,7 @@ export async function ArticlePage({ params }: ArticlePageProps) {
   return (
     <article className="mx-auto max-w-2xl px-6 py-20">
       <Link
-        href="/articles"
+        href="/epanouie/articles"
         className="text-sm text-lavender-600 transition-colors hover:text-lavender-500"
       >
         ← 読みものへ戻る

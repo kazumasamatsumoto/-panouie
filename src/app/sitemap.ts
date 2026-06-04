@@ -1,25 +1,45 @@
 import type { MetadataRoute } from "next";
+import { lumi } from "@/lib/media/lumi";
+import { getPublishedMedia } from "@/lib/media/registry";
 import { getAllArticles } from "@/lib/content/articles";
 
-const BASE_URL = "https://ai-search-match.org";
+const BASE_URL = lumi.baseUrl;
 
 export function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes: MetadataRoute.Sitemap = [
+  const entries: MetadataRoute.Sitemap = [
     { url: BASE_URL, changeFrequency: "weekly", priority: 1 },
-    { url: `${BASE_URL}/articles`, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${BASE_URL}/about`, changeFrequency: "monthly", priority: 0.5 },
   ];
 
-  const articleRoutes: MetadataRoute.Sitemap = getAllArticles().map(
-    (article) => ({
-      url: `${BASE_URL}/articles/${article.slug}`,
-      lastModified: new Date(article.publishedAt),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    }),
-  );
+  for (const media of getPublishedMedia()) {
+    entries.push(
+      {
+        url: `${BASE_URL}/${media.slug}`,
+        changeFrequency: "weekly",
+        priority: 0.9,
+      },
+      {
+        url: `${BASE_URL}/${media.slug}/articles`,
+        changeFrequency: "weekly",
+        priority: 0.8,
+      },
+      {
+        url: `${BASE_URL}/${media.slug}/about`,
+        changeFrequency: "monthly",
+        priority: 0.5,
+      },
+    );
 
-  return [...staticRoutes, ...articleRoutes];
+    for (const article of getAllArticles(media.slug)) {
+      entries.push({
+        url: `${BASE_URL}/${media.slug}/articles/${article.slug}`,
+        lastModified: new Date(article.publishedAt),
+        changeFrequency: "monthly",
+        priority: 0.6,
+      });
+    }
+  }
+
+  return entries;
 }
 
 export default sitemap;
