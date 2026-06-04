@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+/*
+ * Épanouie ブランドデザイントークン
+ * 深紫 / ラベンダー / シャンパン — 温かさ・共感・「そのままでいい」
+ */
+@theme {
+  --color-plum-50: #f6f4f9;
+  --color-plum-100: #e9e4f0;
+  --color-plum-200: #cfc6dd;
+  --color-plum-500: #4a3a63;
+  --color-plum-700: #382a4d;
+  --color-plum-900: #2c1f3e;
+
+  --color-lavender-300: #b3acec;
+  --color-lavender-400: #9a91e4;
+  --color-lavender-500: #7f77dd;
+  --color-lavender-600: #665fc9;
+
+  --color-champagne-300: #ddd2bd;
+  --color-champagne-400: #d0c2a8;
+  --color-champagne-500: #c9b99a;
+  --color-champagne-600: #b3a182;
+
+  --color-cream: #faf8f4;
+  --color-ink: #2c1f3e;
+
+  --font-sans:
+    "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", Meiryo,
+    sans-serif;
+  --font-serif:
+    "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+}
+
+:root {
+  --background: var(--color-cream);
+  --foreground: var(--color-ink);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-lavender-300);
+  color: var(--color-plum-900);
+}
+
+/* 記事本文のタイポグラフィ */
+.article-body {
+  color: var(--color-plum-700);
+  font-size: 1.0625rem;
+  line-height: 2;
+}
+
+.article-body > * + * {
+  margin-top: 1.5rem;
+}
+
+.article-body h2 {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--color-plum-900);
+}
+
+.article-body h3 {
+  margin-top: 2rem;
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--color-plum-900);
+}
+
+.article-body strong {
+  color: var(--color-plum-900);
+  font-weight: 700;
+}
+
+.article-body a {
+  color: var(--color-lavender-600);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.article-body ul,
+.article-body ol {
+  padding-left: 1.5rem;
+}
+
+.article-body ul {
+  list-style: disc;
+}
+
+.article-body ol {
+  list-style: decimal;
+}
+
+.article-body li + li {
+  margin-top: 0.5rem;
+}
+
+.article-body blockquote {
+  margin: 2rem 0;
+  border-left: 3px solid var(--color-lavender-400);
+  padding: 0.5rem 0 0.5rem 1.5rem;
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  color: var(--color-plum-900);
+}
+
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.article-body th,
+.article-body td {
+  border: 1px solid var(--color-plum-100);
+  padding: 0.625rem 1rem;
+  text-align: left;
+}
+
+.article-body th {
+  background: var(--color-plum-100);
+  color: var(--color-plum-900);
+  font-weight: 500;
+}
