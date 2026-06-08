@@ -58,6 +58,20 @@ export function getAllArticles(media: string): ArticleMeta[] {
     .sort((a, b) => (a.publishedAt < b.publishedAt ? 1 : -1));
 }
 
+export function getArticlesByFeature(
+  media: string,
+  feature: string,
+): ArticleMeta[] {
+  return getAllArticles(media)
+    .filter((article) => article.feature === feature)
+    .sort((a, b) => {
+      const oa = a.featureOrder ?? Number.MAX_SAFE_INTEGER;
+      const ob = b.featureOrder ?? Number.MAX_SAFE_INTEGER;
+      if (oa !== ob) return oa - ob;
+      return a.publishedAt < b.publishedAt ? 1 : -1;
+    });
+}
+
 export async function getArticle(
   media: string,
   slug: string,
