@@ -42,6 +42,46 @@ export const features: Feature[] = [
     ],
     published: true,
   },
+  {
+    slug: "beyond-3-8-percent",
+    title: "「3.8%」の向こう側",
+    lead: "内閣府の論文が突きつけた数字を、まず正面から受け止める。逃げない。そのうえで問い返す——その数字は、私たちに何を命じているのか。論文は「条件を下げろ」と言う。私たちは「何を大切にするかは、あなたが決める」と言う。",
+    description:
+      "「結婚市場」論への、静かな応答。数字は認める。撃つのは、その意味づけと前提。同じ3.8%を、別の角度から読み直す特集。",
+    emoji: "🪟",
+    cardGradient: "from-plum-100 to-lavender-300/40",
+    sections: [
+      {
+        title: "はじめに",
+        description: "この特集が、何に応答し、何を問うのか。",
+      },
+      {
+        title: "「市場価値」という言葉を、置き直す",
+        description: "人を6条件で値付けする発想の、その先へ。",
+      },
+      {
+        title: "「成立率3.8%」を、読み替える",
+        description: "同じ数字が、別の意味を持ち始める。",
+      },
+      {
+        title: "「条件を下げろ」への、静かな反論",
+        description: "下げないことは、居直りではなく意思かもしれない。",
+      },
+      {
+        title: "「結婚がゴール」という前提を、外す",
+        description: "ゴールではなく、数ある選択肢の一つとして。",
+      },
+      {
+        title: "少子化の「手段」にされないために",
+        description: "私の人生は、誰かの政策の変数ではない。",
+      },
+      {
+        title: "同じデータから、希望を引き出す",
+        description: "数字に怯えるのではなく、数字を味方にする。",
+      },
+    ],
+    published: true,
+  },
 ];
 
 export function getPublishedFeatures(): Feature[] {
