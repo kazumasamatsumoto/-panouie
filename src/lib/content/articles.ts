@@ -34,7 +34,7 @@ export function getArticleSlugs(media: string): string[] {
   }
   return fs
     .readdirSync(dir)
-    .filter((file) => file.endsWith(".md"))
+    .filter((file) => file.endsWith(".md") && !file.startsWith("_"))
     .map((file) => file.replace(/\.md$/, ""));
 }
 
