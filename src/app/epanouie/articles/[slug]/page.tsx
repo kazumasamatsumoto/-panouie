@@ -6,6 +6,9 @@ import { getArticle, getArticleSlugs } from "@/lib/content/articles";
 
 const MEDIA = "epanouie";
 
+// generateStaticParams で生成したスラッグ以外は 404 にする
+export const dynamicParams = false;
+
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
 }

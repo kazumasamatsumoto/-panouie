@@ -21,9 +21,16 @@ function readArticleFile(
   media: string,
   slug: string,
 ): { data: ArticleFrontmatter; content: string } {
+  // `_` 始まりはバックログ等の非公開ファイル。記事として扱わない。
+  if (slug.startsWith("_") || slug.includes("/") || slug.includes("..")) {
+    throw new Error(`Invalid article slug: ${slug}`);
+  }
   const fullPath = path.join(mediaDir(media), `${slug}.md`);
   const raw = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(raw);
+  if (!data.title) {
+    throw new Error(`Article is missing frontmatter: ${slug}`);
+  }
   return { data: data as ArticleFrontmatter, content };
 }
 
