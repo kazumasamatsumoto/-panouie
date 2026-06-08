@@ -82,6 +82,54 @@ export const features: Feature[] = [
     ],
     published: true,
   },
+  {
+    slug: "tomoni",
+    title: "ともに——HeForSheから考える",
+    lead: "「いい年して」「結婚は?」——日々ぶつけられる言葉を、まず否定せず置く。その違和感は、本当に\"あなた個人\"の問題なのか。努力で輝けとは言わない。構造を見つめ、男性も含めた「ともに」を描く連載です。",
+    description:
+      "「あなたが輝けないのは、あなたのせいではない」。HeForSheを土台に、性別役割の構造を見つめ、男女がともに生きる道を考える連載。",
+    emoji: "🤝",
+    cardGradient: "from-lavender-300/40 to-plum-100",
+    sections: [
+      {
+        title: "宣言",
+        description: "この連載が、何を見つめ、何を描くのか。",
+      },
+      {
+        title: "男性も縛られている",
+        description: "「男は大黒柱」という役割は、誰を縛っているのか。",
+      },
+      {
+        title: "家庭という最前線",
+        description: "ケアと家事。名もなき労働の偏りを見つめる。",
+      },
+      {
+        title: "制度のあり方",
+        description: "輝きは意志ではなく、制度設計で決まる。",
+      },
+      {
+        title: "連帯か、分断か",
+        description: "敵対ではなく、ともに。味方になるとはどういうことか。",
+      },
+      {
+        title: "HeForSheとは",
+        description: "10年前、国連で語られたこと。その意義と限界。",
+      },
+      {
+        title: "輝く女性のあり方",
+        description: "輝きの定義を、他人から取り戻す。",
+      },
+      {
+        title: "横断——市場と政策の視線",
+        description: "「産むために」「条件を下げろ」。その非対称を問う。",
+      },
+      {
+        title: "結び",
+        description: "「あなたのせいではない」を、出発点にする。",
+      },
+    ],
+    published: true,
+  },
 ];
 
 export function getPublishedFeatures(): Feature[] {
