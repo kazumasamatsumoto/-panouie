@@ -130,6 +130,38 @@ export const features: Feature[] = [
     ],
     published: true,
   },
+  {
+    slug: "marriage-no-compromise",
+    title: "妥協しない、という選択",
+    lead: "「もう歳だから、選り好みするな」——その言葉、誰のため? 条件を下げろと言う人ほど、あなたの人生に責任を取りません。妥協は、自己尊重の放棄。基準を下げないことは、わがままではなく、自分への誠実さです。",
+    description:
+      "「妥協しろ」という社会の圧を、名指しして跳ね返す。基準を下げないことは、自分への誠実さ。35歳からの相手選びを、勝ち負けではなく「納得」で。",
+    emoji: "💍",
+    cardGradient: "from-champagne-300/50 to-lavender-300/40",
+    sections: [
+      {
+        title: "社会の「妥協しろ」を跳ね返す",
+        description: "「選り好みするな」——その言葉は、誰のためのものか。",
+      },
+      {
+        title: "「妥協しない」は自己尊重",
+        description: "基準を下げないことは、自分への誠実さである。",
+      },
+      {
+        title: "自分を磨くと、相手が変わる",
+        description: "自分の人生を輝かせることが、相手選びの土台になる。",
+      },
+      {
+        title: "一人の時間と、焦りの解体",
+        description: "妥協で埋める毎日より、一人で満ちている毎日を。",
+      },
+      {
+        title: "35歳以上を、強みに",
+        description: "減ったのは選択肢ではなく、妥協する理由。",
+      },
+    ],
+    published: true,
+  },
 ];
 
 export function getPublishedFeatures(): Feature[] {
