@@ -162,6 +162,38 @@ export const features: Feature[] = [
     ],
     published: true,
   },
+  {
+    slug: "career-breakthrough",
+    title: "天井は、もうない",
+    lead: "あからさまな差別は、時代がだいぶ倒してくれた。本当の難所は、表に残った建前ではなく、内面化された「私なんかが」という自己制限と、仕組みに残った微妙な偏り。敵は人ではなく、前提。主語を自分に戻して、磨いた力で、場所を取りにいく。",
+    description:
+      "「私なんかが上を狙うなんて」——内面化した固定観念と、仕組みに残った微妙な偏りを解体する。敵は人ではなく前提。35歳からのキャリアを、本番に。",
+    emoji: "🚀",
+    cardGradient: "from-plum-100 to-champagne-300/50",
+    sections: [
+      {
+        title: "古い固定観念を、名指しする",
+        description: "もう時代錯誤になった「常識」を、晒していく。",
+      },
+      {
+        title: "内面化した固定観念を、解く",
+        description: "いちばん手強い天井は、自分の中にある。",
+      },
+      {
+        title: "仕事を磨いて、場所を取りにいく",
+        description: "役職は、待つものではなく、取りにいくもの。",
+      },
+      {
+        title: "周囲の声・構造を、跳ね返す",
+        description: "聞かなくていい声と、作っていい道がある。",
+      },
+      {
+        title: "再定義し、前へ",
+        description: "35歳からのキャリアは、巻き返しではなく本番。",
+      },
+    ],
+    published: true,
+  },
 ];
 
 export function getPublishedFeatures(): Feature[] {
