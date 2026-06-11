@@ -1,27 +1,24 @@
-import Link from "next/link";
+import { Sparkles } from "@/components/ui/sparkles";
+import { ButtonLink } from "@/components/ui/button-link";
 
-export function NotFound() {
+export default function NotFound() {
   return (
-    <div className="mx-auto flex max-w-xl flex-col items-center px-6 py-32 text-center">
-      <p className="text-5xl" aria-hidden>
+    <div className="relative mx-auto flex max-w-xl flex-col items-center px-6 py-32 text-center">
+      <Sparkles />
+      <p className="animate-fade-up text-5xl" aria-hidden>
         🌙
       </p>
-      <h1 className="mt-6 font-serif text-2xl font-medium text-plum-900">
+      <h1 className="animate-fade-up mt-6 font-serif text-2xl font-medium text-plum-900 [animation-delay:150ms]">
         ページが見つかりませんでした
       </h1>
-      <p className="mt-4 leading-loose text-plum-500">
+      <p className="animate-fade-up mt-4 leading-loose text-plum-500 [animation-delay:300ms]">
         探していたページは、まだここにないようです。
         <br />
         よかったら、トップページから巡ってみてください。
       </p>
-      <Link
-        href="/"
-        className="mt-8 rounded-full bg-lavender-500 px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-lavender-600"
-      >
+      <ButtonLink href="/" className="animate-fade-up mt-8 [animation-delay:450ms]">
         ホームへ戻る
-      </Link>
+      </ButtonLink>
     </div>
   );
 }
-
-export default NotFound;

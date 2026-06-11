@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Sparkles } from "@/components/ui/sparkles";
 import { formatDate } from "@/lib/format-date";
 import { getArticlesByFeature } from "@/lib/content/articles";
 import { getFeatureBySlug, getPublishedFeatures } from "@/lib/content/features";
@@ -36,7 +37,7 @@ export async function generateMetadata({
   };
 }
 
-export async function FeaturePage({ params }: FeaturePageProps) {
+export default async function FeaturePage({ params }: FeaturePageProps) {
   const { feature: slug } = await params;
   const feature = getFeatureBySlug(slug);
   if (!feature || !feature.published) {
@@ -55,16 +56,22 @@ export async function FeaturePage({ params }: FeaturePageProps) {
       </Link>
 
       <header
-        className={`mt-8 overflow-hidden rounded-3xl bg-gradient-to-br ${feature.cardGradient} px-8 py-14 text-center sm:px-12`}
+        className={`relative mt-8 overflow-hidden rounded-3xl bg-gradient-to-br ${feature.cardGradient} px-8 py-14 text-center sm:px-12`}
       >
-        <p className="text-xs tracking-[0.3em] text-plum-700">特集 / FEATURE</p>
-        <div className="mt-4 text-5xl" aria-hidden>
+        <Sparkles />
+        <p className="animate-fade-up text-xs tracking-[0.3em] text-plum-700">
+          特集 / FEATURE
+        </p>
+        <div
+          className="animate-fade-up mt-4 text-5xl [animation-delay:120ms]"
+          aria-hidden
+        >
           {feature.emoji}
         </div>
-        <h1 className="mt-4 font-serif text-3xl font-medium leading-snug text-plum-900 sm:text-4xl">
+        <h1 className="animate-fade-up mt-4 font-serif text-3xl font-medium leading-snug text-plum-900 [animation-delay:240ms] sm:text-4xl">
           {feature.title}
         </h1>
-        <p className="mx-auto mt-6 max-w-2xl leading-loose text-plum-700">
+        <p className="animate-fade-up mx-auto mt-6 max-w-2xl leading-loose text-plum-700 [animation-delay:360ms]">
           {feature.lead}
         </p>
       </header>
@@ -77,7 +84,7 @@ export async function FeaturePage({ params }: FeaturePageProps) {
             );
             if (sectionArticles.length === 0) return null;
             return (
-              <section key={section.title}>
+              <section key={section.title} className="scroll-reveal">
                 <div className="border-b border-plum-100 pb-3">
                   <p className="text-xs tracking-wide text-champagne-600">
                     {String(index + 1).padStart(2, "0")}
@@ -96,9 +103,12 @@ export async function FeaturePage({ params }: FeaturePageProps) {
                     <li key={article.slug}>
                       <Link
                         href={`/${MEDIA}/articles/${article.slug}`}
-                        className="group flex items-baseline gap-3 py-4 transition-colors"
+                        className="group flex items-baseline gap-3 rounded-lg py-4 transition-colors hover:bg-white/50"
                       >
-                        <span className="text-lg" aria-hidden>
+                        <span
+                          className="text-lg transition-transform duration-300 group-hover:scale-110"
+                          aria-hidden
+                        >
                           {article.coverEmoji ?? "🌸"}
                         </span>
                         <span className="flex-1">
@@ -131,5 +141,3 @@ export async function FeaturePage({ params }: FeaturePageProps) {
     </div>
   );
 }
-
-export default FeaturePage;

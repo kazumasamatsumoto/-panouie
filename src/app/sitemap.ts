@@ -6,7 +6,7 @@ import { getPublishedFeatures } from "@/lib/content/features";
 
 const BASE_URL = lumi.baseUrl;
 
-export function sitemap(): MetadataRoute.Sitemap {
+export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [
     { url: BASE_URL, changeFrequency: "weekly", priority: 1 },
   ];
@@ -53,5 +53,3 @@ export function sitemap(): MetadataRoute.Sitemap {
 
   return entries;
 }
-
-export default sitemap;

@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { cache } from "react";
 import matter from "gray-matter";
 import readingTime from "reading-time";
 import { remark } from "remark";
@@ -45,7 +46,10 @@ export function getArticleSlugs(media: string): string[] {
     .map((file) => file.replace(/\.md$/, ""));
 }
 
-export function getAllArticles(media: string): ArticleMeta[] {
+// cache() でリクエスト内の重複パースを防ぐ（記事数が多いため）
+export const getAllArticles = cache(function getAllArticles(
+  media: string,
+): ArticleMeta[] {
   return getArticleSlugs(media)
     .map((slug) => {
       const { data, content } = readArticleFile(media, slug);
@@ -56,7 +60,7 @@ export function getAllArticles(media: string): ArticleMeta[] {
       } satisfies ArticleMeta;
     })
     .sort((a, b) => (a.publishedAt < b.publishedAt ? 1 : -1));
-}
+});
 
 export function getArticlesByFeature(
   media: string,
@@ -72,7 +76,8 @@ export function getArticlesByFeature(
     });
 }
 
-export async function getArticle(
+// generateMetadata とページ本体の双方から呼ばれるため cache() でパースを共有する
+export const getArticle = cache(async function getArticle(
   media: string,
   slug: string,
 ): Promise<Article> {
@@ -88,4 +93,4 @@ export async function getArticle(
     readingMinutes: Math.max(1, Math.round(readingTime(content).minutes)),
     contentHtml: processed.toString(),
   } satisfies Article;
-}
+});

@@ -38,7 +38,7 @@ export async function generateMetadata({
   }
 }
 
-export async function ArticlePage({ params }: ArticlePageProps) {
+export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
 
   let article;
@@ -50,6 +50,8 @@ export async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <article className="mx-auto max-w-2xl px-6 py-20">
+      <div aria-hidden className="reading-progress" />
+
       <Link
         href="/epanouie/articles"
         className="text-sm text-lavender-600 transition-colors hover:text-lavender-500"
@@ -58,16 +60,16 @@ export async function ArticlePage({ params }: ArticlePageProps) {
       </Link>
 
       <header className="mt-8 border-b border-plum-100 pb-10">
-        <span className="text-xs font-medium tracking-wide text-lavender-600">
+        <span className="animate-fade-up inline-block text-xs font-medium tracking-wide text-lavender-600">
           {article.category}
         </span>
-        <h1 className="mt-3 font-serif text-3xl font-medium leading-snug text-plum-900">
+        <h1 className="animate-fade-up mt-3 font-serif text-3xl font-medium leading-snug text-plum-900 [animation-delay:120ms]">
           {article.title}
         </h1>
-        <p className="mt-4 leading-relaxed text-plum-500">
+        <p className="animate-fade-up mt-4 leading-relaxed text-plum-500 [animation-delay:240ms]">
           {article.description}
         </p>
-        <div className="mt-6 flex items-center gap-3 text-xs text-champagne-600">
+        <div className="animate-fade-up mt-6 flex items-center gap-3 text-xs text-champagne-600 [animation-delay:360ms]">
           <span>{article.author}</span>
           <span aria-hidden>·</span>
           <time dateTime={article.publishedAt}>
@@ -83,16 +85,23 @@ export async function ArticlePage({ params }: ArticlePageProps) {
         dangerouslySetInnerHTML={{ __html: article.contentHtml }}
       />
 
-      <footer className="mt-16 rounded-2xl bg-plum-100/50 p-8 text-center">
-        <p className="font-serif text-lg text-plum-900">
-          今日も、ここまで読んでくれてありがとう。
-        </p>
-        <p className="mt-2 text-sm text-plum-500">
-          あなたのペースで、また会いに来てください。
-        </p>
+      <p
+        aria-hidden
+        className="mt-16 text-center text-xs tracking-[1em] text-champagne-500"
+      >
+        ✦ ✦ ✦
+      </p>
+
+      <footer className="mt-8 rounded-2xl bg-gradient-to-br from-lavender-300/40 via-champagne-300/30 to-plum-100/60 p-px">
+        <div className="relative overflow-hidden rounded-[calc(1rem-1px)] bg-cream/90 p-8 text-center">
+          <p className="font-serif text-lg text-plum-900">
+            今日も、ここまで読んでくれてありがとう。
+          </p>
+          <p className="mt-2 text-sm text-plum-500">
+            あなたのペースで、また会いに来てください。
+          </p>
+        </div>
       </footer>
     </article>
   );
 }
-
-export default ArticlePage;

@@ -1,12 +1,16 @@
 import Link from "next/link";
+import { Aurora } from "@/components/ui/aurora";
+import { Sparkles } from "@/components/ui/sparkles";
 import { lumi } from "@/lib/media/lumi";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-24 border-t border-plum-100/60 bg-plum-900 text-cream">
-      <div className="mx-auto max-w-5xl px-6 py-14">
+    <footer className="relative mt-24 overflow-hidden border-t border-plum-100/60 bg-plum-900 text-cream">
+      <Aurora tone="dark" />
+      <Sparkles tone="dark" />
+      <div className="relative mx-auto max-w-5xl px-6 py-14">
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
           <div className="max-w-sm">
             <p className="font-serif text-xl font-medium tracking-wide">
