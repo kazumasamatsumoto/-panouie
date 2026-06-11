@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Aurora } from "@/components/ui/aurora";
+import { Sparkles } from "@/components/ui/sparkles";
+import { ButtonLink } from "@/components/ui/button-link";
 
 export const metadata: Metadata = {
   title: "Épanouieについて",
@@ -25,15 +27,18 @@ const values = [
   },
 ];
 
-export function AboutPage() {
+export default function AboutPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-20">
-      <section className="text-center">
-        <p className="text-sm tracking-[0.3em] text-champagne-600">ABOUT</p>
-        <h1 className="mt-6 font-serif text-3xl font-medium leading-snug text-plum-900">
+      <section className="relative text-center">
+        <Aurora />
+        <p className="animate-fade-up text-sm tracking-[0.3em] text-champagne-600">
+          ✦ ABOUT ✦
+        </p>
+        <h1 className="animate-fade-up mt-6 font-serif text-3xl font-medium leading-snug text-plum-900 [animation-delay:150ms]">
           Épanouie について
         </h1>
-        <p className="mx-auto mt-8 max-w-xl leading-loose text-plum-500">
+        <p className="animate-fade-up mx-auto mt-8 max-w-xl leading-loose text-plum-500 [animation-delay:300ms]">
           「Épanouie（エパノウイ）」は、フランス語で
           <span className="text-plum-900">「花開いた、満ち足りた」</span>
           という意味の言葉です。
@@ -43,14 +48,14 @@ export function AboutPage() {
       </section>
 
       <section className="mt-20">
-        <h2 className="text-center font-serif text-2xl font-medium text-plum-900">
+        <h2 className="scroll-reveal text-center font-serif text-2xl font-medium text-plum-900">
           わたしたちが大切にしていること
         </h2>
         <div className="mt-10 grid gap-6 sm:grid-cols-3">
           {values.map((value) => (
             <div
               key={value.title}
-              className="rounded-2xl border border-plum-100 bg-white/70 p-7 text-center"
+              className="card-shine scroll-reveal rounded-2xl border border-plum-100 bg-white/70 p-7 text-center transition-all duration-300 hover:-translate-y-1 hover:border-lavender-300 hover:shadow-lg hover:shadow-lavender-400/20"
             >
               <div className="text-4xl" aria-hidden>
                 {value.emoji}
@@ -66,23 +71,20 @@ export function AboutPage() {
         </div>
       </section>
 
-      <section className="mt-20 rounded-3xl bg-gradient-to-br from-plum-900 to-plum-700 px-8 py-14 text-center text-cream">
-        <p className="font-serif text-2xl leading-relaxed">
+      <section className="scroll-reveal relative mt-20 overflow-hidden rounded-3xl bg-gradient-to-br from-plum-900 to-plum-700 px-8 py-14 text-center text-cream">
+        <Aurora tone="dark" />
+        <Sparkles tone="dark" />
+        <p className="shimmer-text-dark relative font-serif text-2xl leading-relaxed">
           35歳から、本当の自分が咲く。
         </p>
-        <p className="mx-auto mt-5 max-w-md text-sm leading-loose text-plum-200">
+        <p className="relative mx-auto mt-5 max-w-md text-sm leading-loose text-plum-200">
           焦らなくて、大丈夫。あなたの季節は、これからゆっくりと巡っていきます。
           Épanouieは、その道のりにそっと寄り添いつづけます。
         </p>
-        <Link
-          href="/epanouie/articles"
-          className="mt-8 inline-block rounded-full bg-lavender-500 px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-lavender-600"
-        >
+        <ButtonLink href="/epanouie/articles" className="relative mt-8">
           読みものを見る
-        </Link>
+        </ButtonLink>
       </section>
     </div>
   );
 }
-
-export default AboutPage;

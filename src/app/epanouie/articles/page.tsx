@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const MEDIA = "epanouie";
 
-export function ArticlesPage() {
+export default function ArticlesPage() {
   const allArticles = getAllArticles(MEDIA);
   const articles = allArticles.filter((a) => !a.feature);
   const features = getPublishedFeatures();
@@ -20,10 +20,13 @@ export function ArticlesPage() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-20">
       <header className="max-w-2xl">
-        <h1 className="font-serif text-3xl font-medium text-plum-900">
+        <p className="animate-fade-up text-sm tracking-[0.3em] text-champagne-600">
+          ✦ ARTICLES
+        </p>
+        <h1 className="animate-fade-up mt-4 font-serif text-3xl font-medium text-plum-900 [animation-delay:150ms]">
           読みもの
         </h1>
-        <p className="mt-4 leading-loose text-plum-500">
+        <p className="animate-fade-up mt-4 leading-loose text-plum-500 [animation-delay:300ms]">
           うまく言葉にできない気持ちに、そっと名前をつけてくれるような。
           そんな読みものを、ここに集めています。
         </p>
@@ -37,9 +40,12 @@ export function ArticlesPage() {
               <Link
                 key={feature.slug}
                 href={`/${MEDIA}/features/${feature.slug}`}
-                className={`group flex items-center gap-5 overflow-hidden rounded-2xl bg-gradient-to-br ${feature.cardGradient} p-6 transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-lavender-300/20`}
+                className={`card-shine scroll-reveal group flex items-center gap-5 rounded-2xl bg-gradient-to-br ${feature.cardGradient} p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-lavender-400/25`}
               >
-                <span className="text-4xl" aria-hidden>
+                <span
+                  className="text-4xl transition-transform duration-300 group-hover:scale-110"
+                  aria-hidden
+                >
                   {feature.emoji}
                 </span>
                 <span className="flex-1">
@@ -66,7 +72,9 @@ export function ArticlesPage() {
           </h2>
           <div className="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {articles.map((article) => (
-              <ArticleCard key={article.slug} article={article} media={MEDIA} />
+              <div key={article.slug} className="scroll-reveal">
+                <ArticleCard article={article} media={MEDIA} />
+              </div>
             ))}
           </div>
         </section>
@@ -78,5 +86,3 @@ export function ArticlesPage() {
     </div>
   );
 }
-
-export default ArticlesPage;

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
 };
 
-export function EpanouieLayout({
+export default function EpanouieLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -34,5 +34,3 @@ export function EpanouieLayout({
     </>
   );
 }
-
-export default EpanouieLayout;

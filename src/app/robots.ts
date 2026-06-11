@@ -1,15 +1,12 @@
 import type { MetadataRoute } from "next";
+import { lumi } from "@/lib/media/lumi";
 
-const BASE_URL = "https://ai-search-match.org";
-
-export function robots(): MetadataRoute.Robots {
+export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: `${BASE_URL}/sitemap.xml`,
+    sitemap: `${lumi.baseUrl}/sitemap.xml`,
   };
 }
-
-export default robots;
