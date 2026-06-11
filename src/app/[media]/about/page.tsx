@@ -1,33 +1,38 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Aurora } from "@/components/ui/aurora";
 import { Sparkles } from "@/components/ui/sparkles";
 import { ButtonLink } from "@/components/ui/button-link";
+import { getMediaBySlug } from "@/lib/media/registry";
+import { getSiteCopy } from "@/lib/media/site-copy";
 
-export const metadata: Metadata = {
-  title: "Épanouieについて",
-  description:
-    "Épanouie（エパノウイ）は、35歳からの独身女性のための自己肯定感メディア。わたしたちが大切にしている想いをお伝えします。",
-};
+interface AboutPageProps {
+  params: Promise<{ media: string }>;
+}
 
-const values = [
-  {
-    emoji: "🌿",
-    title: "そのままで、いい",
-    body: "変わらなくちゃ、と急かす声から少し離れて。あなたの「今」を、まるごと肯定する場所でありたい。",
-  },
-  {
-    emoji: "🤍",
-    title: "共感から、はじめる",
-    body: "正論よりも、まず寄り添うこと。言葉にできない気持ちに、そっと名前をつけられるように。",
-  },
-  {
-    emoji: "🌷",
-    title: "あなたのペースで",
-    body: "誰かと比べる速さではなく、あなたが納得できる速さで。咲く季節は、人それぞれです。",
-  },
-];
+export async function generateMetadata({
+  params,
+}: AboutPageProps): Promise<Metadata> {
+  const { media: slug } = await params;
+  const media = getMediaBySlug(slug);
+  const copy = getSiteCopy(slug);
+  if (!media || !copy) {
+    return {};
+  }
+  return {
+    title: `${media.name}について`,
+    description: copy.about.metaDescription,
+  };
+}
 
-export default function AboutPage() {
+export default async function AboutPage({ params }: AboutPageProps) {
+  const { media: slug } = await params;
+  const media = getMediaBySlug(slug);
+  const copy = getSiteCopy(slug);
+  if (!media || !copy) {
+    notFound();
+  }
+
   return (
     <div className="mx-auto max-w-3xl px-6 py-20">
       <section className="relative text-center">
@@ -36,15 +41,15 @@ export default function AboutPage() {
           ✦ ABOUT ✦
         </p>
         <h1 className="animate-fade-up mt-6 font-serif text-3xl font-medium leading-snug text-plum-900 [animation-delay:150ms]">
-          Épanouie について
+          {media.name} について
         </h1>
-        <p className="animate-fade-up mx-auto mt-8 max-w-xl leading-loose text-plum-500 [animation-delay:300ms]">
-          「Épanouie（エパノウイ）」は、フランス語で
-          <span className="text-plum-900">「花開いた、満ち足りた」</span>
-          という意味の言葉です。
-          <br />
-          35歳からの毎日を生きる、ひとりの女性のための自己肯定感メディアとして生まれました。
-        </p>
+        <div className="animate-fade-up mx-auto mt-8 max-w-xl [animation-delay:300ms]">
+          {copy.about.intro.map((paragraph) => (
+            <p key={paragraph} className="mt-4 leading-loose text-plum-500">
+              {paragraph}
+            </p>
+          ))}
+        </div>
       </section>
 
       <section className="mt-20">
@@ -52,7 +57,7 @@ export default function AboutPage() {
           わたしたちが大切にしていること
         </h2>
         <div className="mt-10 grid gap-6 sm:grid-cols-3">
-          {values.map((value) => (
+          {copy.about.values.map((value) => (
             <div
               key={value.title}
               className="card-shine scroll-reveal rounded-2xl border border-plum-100 bg-white/70 p-7 text-center transition-all duration-300 hover:-translate-y-1 hover:border-lavender-300 hover:shadow-lg hover:shadow-lavender-400/20"
@@ -75,13 +80,12 @@ export default function AboutPage() {
         <Aurora tone="dark" />
         <Sparkles tone="dark" />
         <p className="shimmer-text-dark relative font-serif text-2xl leading-relaxed">
-          35歳から、本当の自分が咲く。
+          {copy.about.cta.title}
         </p>
         <p className="relative mx-auto mt-5 max-w-md text-sm leading-loose text-plum-200">
-          焦らなくて、大丈夫。あなたの季節は、これからゆっくりと巡っていきます。
-          Épanouieは、その道のりにそっと寄り添いつづけます。
+          {copy.about.cta.body}
         </p>
-        <ButtonLink href="/epanouie/articles" className="relative mt-8">
+        <ButtonLink href={`/${slug}/articles`} className="relative mt-8">
           読みものを見る
         </ButtonLink>
       </section>

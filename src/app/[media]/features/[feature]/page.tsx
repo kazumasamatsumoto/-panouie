@@ -4,25 +4,30 @@ import { notFound } from "next/navigation";
 import { Sparkles } from "@/components/ui/sparkles";
 import { formatDate } from "@/lib/format-date";
 import { getArticlesByFeature } from "@/lib/content/articles";
-import { getFeatureBySlug, getPublishedFeatures } from "@/lib/content/features";
-
-const MEDIA = "epanouie";
+import {
+  getFeatureBySlug,
+  getPublishedFeatures,
+} from "@/lib/content/media-features";
 
 export const dynamicParams = false;
 
 interface FeaturePageProps {
-  params: Promise<{ feature: string }>;
+  params: Promise<{ media: string; feature: string }>;
 }
 
-export function generateStaticParams() {
-  return getPublishedFeatures().map((f) => ({ feature: f.slug }));
+export function generateStaticParams({
+  params,
+}: {
+  params: { media: string };
+}) {
+  return getPublishedFeatures(params.media).map((f) => ({ feature: f.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: FeaturePageProps): Promise<Metadata> {
-  const { feature: slug } = await params;
-  const feature = getFeatureBySlug(slug);
+  const { media, feature: slug } = await params;
+  const feature = getFeatureBySlug(media, slug);
   if (!feature) {
     return { title: "特集が見つかりません" };
   }
@@ -38,18 +43,18 @@ export async function generateMetadata({
 }
 
 export default async function FeaturePage({ params }: FeaturePageProps) {
-  const { feature: slug } = await params;
-  const feature = getFeatureBySlug(slug);
+  const { media, feature: slug } = await params;
+  const feature = getFeatureBySlug(media, slug);
   if (!feature || !feature.published) {
     notFound();
   }
 
-  const articles = getArticlesByFeature(MEDIA, slug);
+  const articles = getArticlesByFeature(media, slug);
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-16">
       <Link
-        href="/epanouie/articles"
+        href={`/${media}/articles`}
         className="text-sm text-lavender-600 transition-colors hover:text-lavender-500"
       >
         ← 読みものへ戻る
@@ -102,7 +107,7 @@ export default async function FeaturePage({ params }: FeaturePageProps) {
                   {sectionArticles.map((article) => (
                     <li key={article.slug}>
                       <Link
-                        href={`/${MEDIA}/articles/${article.slug}`}
+                        href={`/${media}/articles/${article.slug}`}
                         className="group flex items-baseline gap-3 rounded-lg py-4 transition-colors hover:bg-white/50"
                       >
                         <span

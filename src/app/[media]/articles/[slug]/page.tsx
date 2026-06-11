@@ -3,26 +3,29 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { formatDate } from "@/lib/format-date";
 import { getArticle, getArticleSlugs } from "@/lib/content/articles";
-
-const MEDIA = "epanouie";
+import { getSiteCopy } from "@/lib/media/site-copy";
 
 // generateStaticParams で生成したスラッグ以外は 404 にする
 export const dynamicParams = false;
 
 interface ArticlePageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ media: string; slug: string }>;
 }
 
-export function generateStaticParams() {
-  return getArticleSlugs(MEDIA).map((slug) => ({ slug }));
+export function generateStaticParams({
+  params,
+}: {
+  params: { media: string };
+}) {
+  return getArticleSlugs(params.media).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
   params,
 }: ArticlePageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { media, slug } = await params;
   try {
-    const article = await getArticle(MEDIA, slug);
+    const article = await getArticle(media, slug);
     return {
       title: article.title,
       description: article.description,
@@ -39,11 +42,12 @@ export async function generateMetadata({
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
-  const { slug } = await params;
+  const { media, slug } = await params;
+  const copy = getSiteCopy(media);
 
   let article;
   try {
-    article = await getArticle(MEDIA, slug);
+    article = await getArticle(media, slug);
   } catch {
     notFound();
   }
@@ -53,7 +57,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       <div aria-hidden className="reading-progress" />
 
       <Link
-        href="/epanouie/articles"
+        href={`/${media}/articles`}
         className="text-sm text-lavender-600 transition-colors hover:text-lavender-500"
       >
         ← 読みものへ戻る
@@ -95,10 +99,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       <footer className="mt-8 rounded-2xl bg-gradient-to-br from-lavender-300/40 via-champagne-300/30 to-plum-100/60 p-px">
         <div className="relative overflow-hidden rounded-[calc(1rem-1px)] bg-cream/90 p-8 text-center">
           <p className="font-serif text-lg text-plum-900">
-            今日も、ここまで読んでくれてありがとう。
+            {copy?.articleFooter.title ??
+              "今日も、ここまで読んでくれてありがとう。"}
           </p>
           <p className="mt-2 text-sm text-plum-500">
-            あなたのペースで、また会いに来てください。
+            {copy?.articleFooter.body ??
+              "あなたのペースで、また会いに来てください。"}
           </p>
         </div>
       </footer>
