@@ -27,7 +27,7 @@ export const mediaBrands: MediaBrand[] = [
     emoji: "🕯️",
     accentColor: "#c9b99a",
     cardGradient: "from-champagne-300/70 to-plum-100",
-    published: false,
+    published: true,
   },
 ];
 
