@@ -17,6 +17,18 @@ export const mediaBrands: MediaBrand[] = [
     cardGradient: "from-plum-100 to-champagne-300/60",
     published: true,
   },
+  {
+    slug: "lueur",
+    name: "Lueur",
+    tagline: "明日、誰かにひとつの光を。",
+    description:
+      "見ず知らずの誰かへの、明日からできる小さな親切を発信する応援メディア。親切は、先にあなたに効く。",
+    audience: "元気が出ない日の、すべての人",
+    emoji: "🕯️",
+    accentColor: "#c9b99a",
+    cardGradient: "from-champagne-300/70 to-plum-100",
+    published: false,
+  },
 ];
 
 export function getPublishedMedia(): MediaBrand[] {
