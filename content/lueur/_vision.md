@@ -54,6 +54,7 @@ Lumi（光）→ Épanouie（光を灯す）→ Lueur（光を渡す）という
 ## 公開までのタスク
 
 - [ ] `src/app/epanouie/` ハードコードの `[media]` 動的ルート化（メディア2つ目追加の前提リファクタ）
-- [ ] 特集の確定とセクション設計（`features.ts` のメディア対応も検討）
-- [ ] 最初の記事群の執筆
+- [x] 特集の確定とセクション設計 — 第1弾「明日できる、小さな親切」（slug: small-kindness、6章×5本）
+- [x] 最初の記事群の執筆 — 30本完了（`_feature-small-kindness-backlog.md` 参照）
+- [ ] `features.ts` のメディア対応＋特集登録（動的ルート化とあわせて）
 - [ ] `registry.ts` の `published: true` 切り替え
