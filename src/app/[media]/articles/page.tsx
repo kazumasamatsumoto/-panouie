@@ -1,21 +1,38 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { ArticleCard } from "@/components/features/article-card";
 import { getAllArticles } from "@/lib/content/articles";
-import { getPublishedFeatures } from "@/lib/content/features";
+import { getPublishedFeatures } from "@/lib/content/media-features";
+import { getMediaBySlug } from "@/lib/media/registry";
+import { getSiteCopy } from "@/lib/media/site-copy";
 
-export const metadata: Metadata = {
-  title: "読みもの",
-  description:
-    "35歳からの毎日に寄り添う、自己肯定感のための読みもの。心が少し軽くなる言葉を集めました。",
-};
+interface ArticlesPageProps {
+  params: Promise<{ media: string }>;
+}
 
-const MEDIA = "epanouie";
+export async function generateMetadata({
+  params,
+}: ArticlesPageProps): Promise<Metadata> {
+  const { media: slug } = await params;
+  const copy = getSiteCopy(slug);
+  return {
+    title: "読みもの",
+    description: copy?.articlesPage.metaDescription,
+  };
+}
 
-export default function ArticlesPage() {
-  const allArticles = getAllArticles(MEDIA);
+export default async function ArticlesPage({ params }: ArticlesPageProps) {
+  const { media: slug } = await params;
+  const media = getMediaBySlug(slug);
+  const copy = getSiteCopy(slug);
+  if (!media || !copy) {
+    notFound();
+  }
+
+  const allArticles = getAllArticles(slug);
   const articles = allArticles.filter((a) => !a.feature);
-  const features = getPublishedFeatures();
+  const features = getPublishedFeatures(slug);
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-20">
@@ -27,8 +44,12 @@ export default function ArticlesPage() {
           読みもの
         </h1>
         <p className="animate-fade-up mt-4 leading-loose text-plum-500 [animation-delay:300ms]">
-          うまく言葉にできない気持ちに、そっと名前をつけてくれるような。
-          そんな読みものを、ここに集めています。
+          {copy.articlesPage.lede.map((line, index) => (
+            <span key={line}>
+              {index > 0 && <br />}
+              {line}
+            </span>
+          ))}
         </p>
       </header>
 
@@ -39,7 +60,7 @@ export default function ArticlesPage() {
             {features.map((feature) => (
               <Link
                 key={feature.slug}
-                href={`/${MEDIA}/features/${feature.slug}`}
+                href={`/${slug}/features/${feature.slug}`}
                 className={`card-shine scroll-reveal group flex items-center gap-5 rounded-2xl bg-gradient-to-br ${feature.cardGradient} p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-lavender-400/25`}
               >
                 <span
@@ -73,15 +94,17 @@ export default function ArticlesPage() {
           <div className="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {articles.map((article) => (
               <div key={article.slug} className="scroll-reveal">
-                <ArticleCard article={article} media={MEDIA} />
+                <ArticleCard article={article} media={slug} />
               </div>
             ))}
           </div>
         </section>
       ) : (
-        <p className="mt-14 text-plum-500">
-          記事を準備しています。もう少しだけお待ちください。
-        </p>
+        features.length === 0 && (
+          <p className="mt-14 text-plum-500">
+            記事を準備しています。もう少しだけお待ちください。
+          </p>
+        )
       )}
     </div>
   );

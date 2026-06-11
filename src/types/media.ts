@@ -18,3 +18,38 @@ export interface MediaBrand {
   /** 公開中かどうか。false なら「準備中」表示にする。 */
   published: boolean;
 }
+
+/** メディアごとのページ文言。registry がブランド情報、こちらがページの言葉を持つ。 */
+export interface MediaSiteCopy {
+  /** メタデータ用キーワード */
+  keywords: string[];
+  hero: {
+    /** 見出し行。最後の行にシマー演出がかかる。 */
+    titleLines: string[];
+    /** リード文（行ごと） */
+    lede: string[];
+  };
+  featuresSection: {
+    subline: string;
+  };
+  latestSection: {
+    subline: string;
+  };
+  articlesPage: {
+    metaDescription: string;
+    lede: string[];
+  };
+  about: {
+    metaDescription: string;
+    intro: string[];
+    values: { emoji: string; title: string; body: string }[];
+    cta: { title: string; body: string };
+  };
+  footer: {
+    description: string[];
+  };
+  articleFooter: {
+    title: string;
+    body: string;
+  };
+}

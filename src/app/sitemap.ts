@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { lumi } from "@/lib/media/lumi";
 import { getPublishedMedia } from "@/lib/media/registry";
 import { getAllArticles } from "@/lib/content/articles";
-import { getPublishedFeatures } from "@/lib/content/features";
+import { getPublishedFeatures } from "@/lib/content/media-features";
 
 const BASE_URL = lumi.baseUrl;
 
@@ -39,15 +39,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       });
     }
 
-    // 特集ページ（現状は epanouie メディアのみ）
-    if (media.slug === "epanouie") {
-      for (const feature of getPublishedFeatures()) {
-        entries.push({
-          url: `${BASE_URL}/${media.slug}/features/${feature.slug}`,
-          changeFrequency: "weekly",
-          priority: 0.7,
-        });
-      }
+    for (const feature of getPublishedFeatures(media.slug)) {
+      entries.push({
+        url: `${BASE_URL}/${media.slug}/features/${feature.slug}`,
+        changeFrequency: "weekly",
+        priority: 0.7,
+      });
     }
   }
 

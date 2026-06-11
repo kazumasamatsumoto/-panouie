@@ -2,9 +2,17 @@ import Link from "next/link";
 import { Aurora } from "@/components/ui/aurora";
 import { Sparkles } from "@/components/ui/sparkles";
 import { lumi } from "@/lib/media/lumi";
+import { getSiteCopy } from "@/lib/media/site-copy";
+import type { MediaBrand } from "@/types/media";
 
-export function SiteFooter() {
+interface SiteFooterProps {
+  media: MediaBrand;
+}
+
+export function SiteFooter({ media }: SiteFooterProps) {
   const year = new Date().getFullYear();
+  const copy = getSiteCopy(media.slug);
+  const description = copy?.footer.description ?? [media.description];
 
   return (
     <footer className="relative mt-24 overflow-hidden border-t border-plum-100/60 bg-plum-900 text-cream">
@@ -14,31 +22,35 @@ export function SiteFooter() {
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
           <div className="max-w-sm">
             <p className="font-serif text-xl font-medium tracking-wide">
-              Épanouie
+              {media.name}
             </p>
             <p className="mt-3 text-sm leading-relaxed text-plum-200">
-              35歳からの独身女性のための、自己肯定感メディア。
-              そのままのあなたで、いい。
+              {description.map((line, index) => (
+                <span key={line}>
+                  {index > 0 && <br />}
+                  {line}
+                </span>
+              ))}
             </p>
           </div>
           <nav className="flex flex-col gap-3 text-sm text-plum-200">
             <Link
-              href="/epanouie"
+              href={`/${media.slug}`}
               className="transition-colors hover:text-lavender-300"
             >
-              Épanouieホーム
+              {media.name}ホーム
             </Link>
             <Link
-              href="/epanouie/articles"
+              href={`/${media.slug}/articles`}
               className="transition-colors hover:text-lavender-300"
             >
               読みもの
             </Link>
             <Link
-              href="/epanouie/about"
+              href={`/${media.slug}/about`}
               className="transition-colors hover:text-lavender-300"
             >
-              Épanouieについて
+              {media.name}について
             </Link>
             <Link
               href="/"
@@ -49,7 +61,7 @@ export function SiteFooter() {
           </nav>
         </div>
         <p className="mt-12 text-xs text-plum-200/70">
-          © {year} {lumi.name} — Épanouie. すべての「そのまま」に、寄り添って。
+          © {year} {lumi.name} — {media.name}. {media.tagline}
         </p>
       </div>
     </footer>
