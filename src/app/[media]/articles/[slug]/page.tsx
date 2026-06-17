@@ -4,6 +4,9 @@ import { notFound } from "next/navigation";
 import { formatDate } from "@/lib/format-date";
 import { getArticle, getArticleSlugs } from "@/lib/content/articles";
 import { getSiteCopy } from "@/lib/media/site-copy";
+import { getMediaBySlug } from "@/lib/media/registry";
+import { lumi } from "@/lib/media/lumi";
+import { ArticleShare } from "@/components/features/article-share";
 
 // generateStaticParams で生成したスラッグ以外は 404 にする
 export const dynamicParams = false;
@@ -44,6 +47,8 @@ export async function generateMetadata({
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { media, slug } = await params;
   const copy = getSiteCopy(media);
+  const brand = getMediaBySlug(media);
+  const shareUrl = `${lumi.baseUrl}/${media}/articles/${slug}`;
 
   let article;
   try {
@@ -87,6 +92,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       <div
         className="article-body mt-10"
         dangerouslySetInnerHTML={{ __html: article.contentHtml }}
+      />
+
+      <ArticleShare
+        url={shareUrl}
+        title={article.title}
+        mediaName={brand?.name ?? "Lumi"}
       />
 
       <p
