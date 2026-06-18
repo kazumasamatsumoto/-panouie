@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_JP, Noto_Serif_JP } from "next/font/google";
 import { lumi } from "@/lib/media/lumi";
+import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 import "./globals.css";
 
 const notoSans = Noto_Sans_JP({
@@ -51,6 +52,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col bg-cream text-ink">
         {children}
+        <GoogleAnalytics />
       </body>
     </html>
   );
