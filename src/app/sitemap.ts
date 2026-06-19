@@ -3,6 +3,7 @@ import { lumi } from "@/lib/media/lumi";
 import { getPublishedMedia } from "@/lib/media/registry";
 import { getAllArticles } from "@/lib/content/articles";
 import { getPublishedFeatures } from "@/lib/content/media-features";
+import { hasDiagnosis } from "@/lib/content/diagnosis";
 
 const BASE_URL = lumi.baseUrl;
 
@@ -29,6 +30,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.5,
       },
     );
+
+    if (hasDiagnosis(media.slug)) {
+      entries.push({
+        url: `${BASE_URL}/${media.slug}/diagnosis`,
+        changeFrequency: "monthly",
+        priority: 0.7,
+      });
+    }
 
     for (const article of getAllArticles(media.slug)) {
       entries.push({

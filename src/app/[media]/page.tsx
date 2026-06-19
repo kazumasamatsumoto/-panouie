@@ -8,6 +8,7 @@ import { getAllArticles } from "@/lib/content/articles";
 import { getPublishedFeatures } from "@/lib/content/media-features";
 import { getMediaBySlug } from "@/lib/media/registry";
 import { getSiteCopy } from "@/lib/media/site-copy";
+import { hasDiagnosis } from "@/lib/content/diagnosis";
 
 interface MediaHomePageProps {
   params: Promise<{ media: string }>;
@@ -25,6 +26,7 @@ export default async function MediaHomePage({ params }: MediaHomePageProps) {
   const latest = articles.slice(0, 3);
   const features = getPublishedFeatures(slug).slice(0, 4);
   const shimmerLine = copy.hero.titleLines.length - 1;
+  const showDiagnosis = hasDiagnosis(slug);
 
   return (
     <>
@@ -107,6 +109,31 @@ export default async function MediaHomePage({ params }: MediaHomePageProps) {
               </Link>
             ))}
           </div>
+        </section>
+      )}
+
+      {showDiagnosis && (
+        <section className="mx-auto max-w-5xl px-6 py-12">
+          <Link
+            href={`/${slug}/diagnosis`}
+            className="card-shine scroll-reveal group flex flex-col items-center gap-4 overflow-hidden rounded-3xl bg-gradient-to-br from-lavender-500/15 via-champagne-300/40 to-plum-100 px-8 py-12 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-lavender-400/25"
+          >
+            <span
+              className="text-4xl transition-transform duration-300 group-hover:scale-110"
+              aria-hidden
+            >
+              ✦
+            </span>
+            <span className="font-serif text-2xl font-medium text-plum-900 transition-colors group-hover:text-lavender-600">
+              あなたは、どう輝く？
+            </span>
+            <span className="max-w-md text-sm leading-relaxed text-plum-700">
+              輝き方に、正解はありません。8つの問いに答えるだけで、あなたの中にある光がそっと映し出されます。
+            </span>
+            <span className="mt-2 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-lavender-500 to-lavender-600 px-7 py-2.5 text-sm font-medium text-white shadow-lg shadow-lavender-500/30">
+              診断をはじめる
+            </span>
+          </Link>
         </section>
       )}
 
